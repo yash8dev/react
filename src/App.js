@@ -1,25 +1,40 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Additem from './Additem';
+import SearchBar from './SearchBar';
+import {useState} from "react";
+import ItemsDisplay from './Itemsdis';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+  const [filiter,setfiliter] = useState({})
+  const [data,setdata] =  useState({items : []});
+  const updatefiliter = (searchpar)=>{
+    setfiliter(searchpar)
+  }
+  
+  const addItemToData=(additems)=>{
+    let items =data["items"];
+    additems.id = items.length;
+    items.push(additems)
+    setdata({items : items});
+    console.log(data)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="container">
+      <div className="row mt-3">
+<SearchBar updatesearchpar={updatefiliter}/>
+</div>
+<div className="row mt-3">
+<ItemsDisplay items={data["items"]}/>
+</div>
+<div className="row mt-3">
+<Additem additem={addItemToData}/>
+</div>
+     </div>
   );
 }
+
+
 
 export default App;
